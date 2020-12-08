@@ -1,24 +1,54 @@
 <header class="header">
   <h1>Trivia App</h1>
 </header>
-
-<section class="card">
   <h2>Question {{current+1}} of {{questions.length}}</h2>
-  <h1>{{questions[current].question}}</h1>
+<section class="question">
 
-  <div>
-    <div (click)="onSelect('a')" class="question question__1">{{questions[current].choices.a}}</div>
-    <div (click)="onSelect('b')" class="question question__2">{{questions[current].choices.b}}</div>
+  <p class="question__statement">{{questions[current].question}}</p>
+
+<div class="choices">
+  <div 
+  class="choices__item"
+  *ngFor="let choice of questions[current].choices | keyvalue"
+
+   (click)="!answerSubmitted && onSelect(choice.key.toString())" 
+   [ngClass]="{'choices__item--selected': answerPreselected === choice.key, 'cursor-pointer':!answerSubmitted }"
+  
+   >
+  <span class="choices__item__text">
+    {{choice.key.toUpperCase()}}.  {{choice.value}}
+  </span> 
+
+   
+   <span 
+   *ngIf="answerSubmitted && questions[current].answer == choice.key"
+   class="marker marker--correct">
+   &#10004; 
+  </span> 
+   <span 
+   *ngIf="answerSubmitted && questions[current].answer !== choice.key && choice.key=== answerPreselected"
+   class="marker marker--incorrect"
+   >&#10005;</span>
+
+   
   </div>
+</div>
 
+<button class="btn btn__submit"  *ngIf="!answerSubmitted" (click)="onSubmit()">Submit</button>
 
-  <div>
-    <div (click)="onSelect('c')" class="question question__3">{{questions[current].choices.c}}</div>
-    <div (click)="onSelect('d')" class="question question__4">{{questions[current].choices.d}}</div>
-  </div>
-
-  <div class="answer-message" *ngIf="answerPicked && answerCorrect">Well Done! Correct!</div>
-  <div class="answer-message" *ngIf="answerPicked && !answerCorrect">Wrong answer!</div>
-
-  <button class="btn" *ngIf="answerPicked" (click)="goToNextQuestion()">NEXT</button>
+  <div 
+  class="answer-message answer-message--correct" 
+  *ngIf="answerSubmitted && answerCorrect"
+  >
+  <span 
+  class="marker marker--correct">
+  &#10004; 
+ </span> 
+  Well Done! Correct!
+</div>
+  <div class="answer-message" *ngIf="answerSubmitted && !answerCorrect">Wrong answer!</div>
 </section>
+
+
+
+  <button class="btn btn__next" *ngIf="answerSubmitted" (click)="goToNextQuestion()">NEXT</button>

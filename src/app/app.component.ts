@@ -8,30 +8,39 @@ import * as data from './trivia.json';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'trivia';
   questions: any = (data as any).default;
   current: number = 0;
+
+  // store both on new memory object
   answerCorrect: boolean;
-  answerPicked: boolean = false;
+  answerPreselected: string = "";
+  answerSubmitted: boolean = false;
   score = 0
 
+
   ngOnInit() {
-    console.log('questions - ', this.questions)
+    // load questions from api if necessary
   }
 
   onSelect(choice: string) {
+    this.answerPreselected = choice;
+  }
 
-    if (choice !== this.questions[this.current].answer) {
+  onSubmit() {
+    if (this.answerPreselected.length !== 1) {
+      return;
+    }
+    if (this.answerPreselected !== this.questions[this.current].answer) {
       this.answerCorrect = false;
     } else {
       this.answerCorrect = true;
     }
-    this.answerPicked = true;
+    this.answerSubmitted = true;
   }
-
 
   goToNextQuestion() {
     this.current++;
-    this.answerPicked = false;
+    this.answerPreselected = "";
+    this.answerSubmitted = false;
   }
 }
