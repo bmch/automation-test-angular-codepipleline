@@ -9,7 +9,7 @@ import * as data from './trivia.json';
 })
 export class AppComponent implements OnInit {
   questions: any = (data as any).default;
-  current: number = 9;
+  current: number = 0;
 
   score = 0
   incorrect = 0;
