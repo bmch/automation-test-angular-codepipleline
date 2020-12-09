@@ -2,7 +2,15 @@
   <h1>Trivia App</h1>
 </header>
 <h2>Question {{current+1}} of {{questions.length}}</h2>
-<section class="question">
+
+<section class ="question" *ngIf="displayFinalScore">
+
+  <h1>Quizz finished!</h1>
+  <h2>Congratulations on finishing this trivia quizz! 
+
+    You're final score is {{score}} out of {{questions.length}}</h2>
+</section>
+<section class="question" *ngIf="!displayFinalScore">
 
   <p class="question__statement">{{questions[current].question}}</p>
 
@@ -10,44 +18,53 @@
     <div 
     class="choices__item" 
       *ngFor="let choice of questions[current].choices | keyvalue"
-      (click)="!answerSubmitted && onSelect(choice.key.toString())"
-      [ngClass]="{'choices__item--selected': answerPreselected === choice.key, 'cursor-pointer':!answerSubmitted }">
+      (click)="!questions[current].answerSubmitted && onSelect(choice.key.toString())"
+      [ngClass]="{'choices__item--selected': questions[current].answerPreselected === choice.key, 'cursor-pointer':!questions[current].answerSubmitted }">
      
       <span class="choices__item__text"> {{choice.key.toUpperCase()}}. {{choice.value}} </span>
 
-      <span *ngIf="answerSubmitted && questions[current].answer == choice.key" class="marker marker--correct">
+      <span *ngIf="questions[current].answerSubmitted && questions[current].answer == choice.key" class="marker marker--correct">
         &#10004;
       </span>
 
-      <span *ngIf="answerSubmitted && questions[current].answer !== choice.key && choice.key=== answerPreselected"
+      <span *ngIf="questions[current].answerSubmitted && questions[current].answer !== choice.key && choice.key=== questions[current].answerPreselected"
         class="marker marker--incorrect">
         &#10005;
       </span>
-      
+
     </div>
   </div>
 
-  <button class="btn btn__submit" *ngIf="!answerSubmitted" (click)="onSubmit()">Submit</button>
+  <button class="btn btn__submit" *ngIf="!questions[current].answerSubmitted" (click)="onSubmit()">Submit</button>
 
-  <div class="answer-message answer-message--correct" *ngIf="answerSubmitted && answerCorrect">
+  <div class="answer-message answer-message--correct" 
+  *ngIf="questions[current].answerSubmitted && questions[current].answerCorrect">
     <span class="marker marker--correct">
       &#10004;
     </span>
     <span class="bold"> Correct. </span> Good job! </div>
 
-  <div class="answer-message answer-message--incorrect" *ngIf="answerSubmitted && !answerCorrect">
+  <div class="answer-message answer-message--incorrect" 
+  *ngIf="questions[current].answerSubmitted && !questions[current].answerCorrect">
     <span class="marker marker--incorrect">&#10005;</span>
     <span class="bold">Incorrect, </span> but nice try!</div>
 
 </section>
 
 <div class="container">
+  <div class="score">
+    Current score is {{score}} correct and {{incorrect}} incorrect
+  </div>
 
-  <button class="btn btn__prev" (click)="goToPreviousQuestion()">
+  <button 
+  *ngIf="current>0"
+  class="btn btn__prev" (click)="goToPreviousQuestion()">
     <span class="arrow arrow--left"> &#8249; </span> Prev
   </button>
 
-  <button class="btn btn__next" (click)="goToNextQuestion()">
+  <button 
+  *ngIf="questions[current].answerSubmitted && current<questions.length-1" 
+  class="btn btn__next" (click)="goToNextQuestion()">
     Next <span class="arrow"> &#8250;</span>
   </button>
 

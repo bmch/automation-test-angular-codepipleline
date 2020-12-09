@@ -40,9 +40,12 @@ h2 {
   margin-left: $margin-default;
   margin-right: $margin-default;
 
-  grid-template-columns: 300px 300px;
-  grid-row-gap: 30px;
-  justify-content: space-between;
+  // grid-template-columns: 300px 300px;
+  // grid-row-gap: 30px;
+  // justify-content: space-between;
+
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 1rem;
 
   &__item {
     background: white;
