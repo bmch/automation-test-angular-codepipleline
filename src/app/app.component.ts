@@ -23,24 +23,26 @@ export class AppComponent implements OnInit {
   }
 
   onSelect(choice: string) {
-    this.answerPreselected = choice;
+    this.questions[this.current].answerPreselected = choice;
   }
 
   onSubmit() {
-    if (this.answerPreselected.length !== 1) {
+    if (this.questions[this.current].answerPreselected.length !== 1) {
       return;
     }
-    if (this.answerPreselected !== this.questions[this.current].answer) {
-      this.answerCorrect = false;
+    if (this.questions[this.current].answerPreselected !== this.questions[this.current].answer) {
+      this.questions[this.current].answerCorrect = false;
     } else {
-      this.answerCorrect = true;
+      this.questions[this.current].answerCorrect = true;
     }
-    this.answerSubmitted = true;
+    this.questions[this.current].answerSubmitted = true;
   }
 
   goToNextQuestion() {
     this.current++;
-    this.answerPreselected = "";
-    this.answerSubmitted = false;
+  }
+
+  goToPreviousQuestion() {
+    this.current--;
   }
 }

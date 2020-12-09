@@ -1,14 +1,19 @@
 $margin-default: 50px;
 $color-green: rgb(9, 165, 9);
+$max-width-measurement: 800px;
 
-body,
+.question,
 h1,
-h2 {
-  font-family: "Helvetica", "Arial", sans-serif;
-  text-align: center;
+h2,
+div,
+span,
+.header,
+.container {
+  font-family: Helvetica, Arial, sans-serif;
 }
 
-h1 {
+h1,
+h2 {
   text-align: center;
 }
 
@@ -16,13 +21,14 @@ h1 {
   border: 1px solid #eaeaea;
   background-color: #fafafa;
   font-family: "Helvetica", "Arial", sans-serif;
-  max-width: 800px;
+  max-width: $max-width-measurement;
   margin: 0 auto;
+  margin-bottom: 25px;
 
   &__statement {
     margin-left: $margin-default;
     margin-right: $margin-default;
-    border: 1px solid blue;
+
     margin-top: 25px;
     margin-bottom: 25px;
     text-align: left;
@@ -33,13 +39,10 @@ h1 {
   display: grid;
   margin-left: $margin-default;
   margin-right: $margin-default;
-  border: 2px dashed red;
+
   grid-template-columns: 300px 300px;
   grid-row-gap: 30px;
-  // grid-column-gap: 30px;
   justify-content: space-between;
-
-  // max-width: 700px;
 
   &__item {
     background: white;
@@ -48,6 +51,11 @@ h1 {
     border-radius: 6px;
     text-align: left;
     color: grey;
+    transition: box-shadow 0.2s ease;
+
+    &__text {
+      margin-right: 20px;
+    }
 
     &--selected {
       color: black;
@@ -66,32 +74,57 @@ h1 {
 }
 
 .btn {
-  margin-left: $margin-default;
-  margin-right: $margin-default;
+  cursor: pointer;
+  border-radius: 6px;
+  color: white;
+  font-size: 17px;
   margin-top: 20px;
   margin-bottom: 20px;
-  cursor: pointer;
+  border: none;
+  display: inline-block !important;
 
   &__submit {
-    display: inline-block !important;
-    text-align: left !important;
-    color: white;
-    background: rgb(37, 37, 37);
     padding: 9px 32px 9px 32px;
-    border-radius: 6px;
-    font-size: 17px;
-    border: none;
+    margin-left: $margin-default;
+    margin-right: $margin-default;
+    text-align: left !important;
+    background: rgb(37, 37, 37);
+
     &:hover {
       background: rgb(80, 79, 79);
     }
   }
   &__next {
-    border: 1px solid lightgray;
-    background-color: lightgreen;
-    text-align: center;
-    padding: 0.6rem 1rem;
-    font-weight: 400;
-    font-size: 1.2rem;
+    box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
+    border-radius: 7px;
+    color: white;
+    background: #0070f3;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 34px;
+    padding-top: 9px;
+
+    &:hover {
+      background: #2c84e7;
+    }
+  }
+  &__prev {
+    border-radius: 7px;
+    color: #0070f3;
+    background: transparent;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 34px;
+    padding-top: 9px;
+    margin-right: 30px;
+
+    &:hover {
+      background: #c0d1ec;
+    }
   }
 }
 
@@ -104,6 +137,9 @@ h1 {
   &--correct {
     color: $color-green;
   }
+  &--incorrect {
+    color: red;
+  }
 }
 
 .marker {
@@ -114,7 +150,7 @@ h1 {
   padding-right: 4px;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 15px;
+  margin-right: 5px;
 
   &--correct {
     background: $color-green;
@@ -122,5 +158,28 @@ h1 {
 
   &--incorrect {
     background: red;
+    margin-right: 9px;
+  }
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.container {
+  text-align: right;
+  max-width: $max-width-measurement;
+  margin: 0 auto;
+}
+
+.arrow {
+  display: inline-block;
+  font-size: 1.6rem;
+  vertical-align: middle;
+  margin-top: -3px;
+  margin-left: 12px;
+  &--left {
+    margin-right: 12px;
+    margin-left: 0px;
   }
 }
